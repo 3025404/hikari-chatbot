@@ -1,1 +1,118 @@
 
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>西野ひかり Re：チャット</title>
+  <link rel="stylesheet" href="chat-style.css">
+</head>
+
+<body>
+  <!-- トップメッセージ -->
+  <div style="padding: 20px; background-color: #f0f0f0; text-align: center;">
+    <h2>これは、チャットボットのテストページです。</h2>
+    <p>右下のチャットウィンドウから西野ひかり Re：とお話しできます。</p>
+  </div>
+
+  <!-- チャットUI -->
+  <button id="chat-button">💬</button>
+
+  <div id="chat-box">
+    <div id="chat-log"></div>
+    <div id="chat-input-area">
+      <input type="text" id="chat-input" placeholder="メッセージを入力..." />
+      <button id="chat-send">送信</button>
+    </div>
+  </div>
+
+  <script>
+    const chatButton = document.getElementById('chat-button');
+    const chatBox = document.getElementById('chat-box');
+    const chatLog = document.getElementById('chat-log');
+    const chatInput = document.getElementById('chat-input');
+    const chatSend = document.getElementById('chat-send');
+
+    const avatarMap = {
+      "喜": "images/hikari_happy.png",
+      "怒": "images/hikari_angry.png",
+      "哀": "images/hikari_sad.png",
+      "楽": "images/hikari_neutral.png"
+    };
+
+    function addBotMessage(text, emotion = "楽") {
+      const botMsg = document.createElement('div');
+      botMsg.className = 'bot-message';
+
+      const avatar = document.createElement('img');
+      avatar.className = 'avatar';
+      avatar.src = avatarMap[emotion] || avatarMap["楽"];
+
+      const botBubble = document.createElement('div');
+      botBubble.className = 'message-bubble bot-bubble';
+      botBubble.textContent = text;
+
+      botMsg.appendChild(avatar);
+      botMsg.appendChild(botBubble);
+      chatLog.appendChild(botMsg);
+      chatLog.scrollTop = chatLog.scrollHeight;
+    }
+
+    function parseGPTResponse(text) {
+      const emotionMatch = text.match(/感情[:：]?\s*(喜|怒|哀|楽)/);
+      const responseMatch = text.match(/応答[:：]?\s*(.+)/s);
+
+      const emotion = emotionMatch ? emotionMatch[1] : "楽";
+      const reply = responseMatch ? responseMatch[1].trim() : "申し訳ありません、うまく応答できませんでした。";
+
+      const validEmotions = ["喜", "怒", "哀", "楽"];
+      const safeEmotion = validEmotions.includes(emotion) ? emotion : "楽";
+
+      return { emotion: safeEmotion, reply };
+    }
+
+    window.addEventListener("load", () => {
+      chatBox.style.display = 'flex';
+      addBotMessage("こんにちは！私は西野ひかり Re：です。何かお困りごとはありますか？", "楽");
+    });
+
+    chatButton.addEventListener('click', () => {
+      chatBox.style.display = chatBox.style.display === 'none' ? 'flex' : 'none';
+    });
+
+    chatSend.addEventListener('click', async () => {
+      const userInput = chatInput.value.trim();
+      if (!userInput) return;
+
+      const userMsg = document.createElement('div');
+      userMsg.className = 'user-message';
+      const userBubble = document.createElement('div');
+      userBubble.className = 'message-bubble user-bubble';
+      userBubble.textContent = userInput;
+      userMsg.appendChild(userBubble);
+      chatLog.appendChild(userMsg);
+      chatInput.value = '';
+      chatLog.scrollTop = chatLog.scrollHeight;
+
+      try {
+        const response = await fetch("/api/chat", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ userInput })
+        });
+
+        const data = await response.json();
+        if (data && data.content) {
+          const parsed = parseGPTResponse(data.content);
+          addBotMessage(parsed.reply, parsed.emotion);
+        } else {
+          addBotMessage("申し訳ありません、応答できませんでした。", "哀");
+        }
+      } catch (error) {
+        addBotMessage("エラーが発生しました。しばらくしてからお試しください。", "哀");
+      }
+    });
+  </script>
+</body>
+</html>
