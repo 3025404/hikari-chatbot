@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <title>西野ひかり Re：チャット</title>
-  <link rel="stylesheet" href="chat-style.css">
+  <link rel="stylesheet" href="/styles/chat-style.css">
 </head>
 
 <body>
@@ -33,10 +33,10 @@
     const chatSend = document.getElementById('chat-send');
 
     const avatarMap = {
-      "喜": "images/hikari_happy.png",
-      "怒": "images/hikari_angry.png",
-      "哀": "images/hikari_sad.png",
-      "楽": "images/hikari_neutral.png"
+      "喜": "/images/hikari_happy.png",
+      "怒": "/images/hikari_angry.png",
+      "哀": "/images/hikari_sad.png",
+      "楽": "/images/hikari_neutral.png"
     };
 
     function addBotMessage(text, emotion = "楽") {
