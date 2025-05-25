@@ -1,0 +1,103 @@
+body {
+  font-family: sans-serif;
+}
+
+/* チャットボタン */
+#chat-button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  font-size: 28px;
+  cursor: pointer;
+  z-index: 1000;
+}
+
+/* チャットウィンドウ */
+#chat-box {
+  position: fixed;
+  bottom: 90px;
+  right: 20px;
+  width: 360px;
+  height: 480px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  display: none;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: 0 0 10px rgba(0,0,0,0.2);
+  z-index: 999;
+}
+
+#chat-log {
+  flex: 1;
+  padding: 10px;
+  overflow-y: auto;
+  background-color: #f9f9f9;
+}
+
+#chat-input-area {
+  display: flex;
+  border-top: 1px solid #ccc;
+}
+
+#chat-input {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  font-size: 14px;
+}
+
+#chat-send {
+  padding: 10px;
+  border: none;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+}
+
+/* 吹き出しデザイン */
+.user-message, .bot-message {
+  display: flex;
+  align-items: flex-end;
+  margin-bottom: 10px;
+}
+
+.user-message {
+  justify-content: flex-end;
+}
+
+.bot-message {
+  justify-content: flex-start;
+}
+
+.message-bubble {
+  max-width: 70%;
+  padding: 8px 12px;
+  border-radius: 15px;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.user-bubble {
+  background-color: #dcf8c6;
+  border-bottom-right-radius: 0;
+}
+
+.bot-bubble {
+  background-color: #eeeeee;
+  border-bottom-left-radius: 0;
+}
+
+.avatar {
+  width: 72px;
+  height: 72px;
+  margin-right: 10px;
+  border-radius: 50%;
+}
