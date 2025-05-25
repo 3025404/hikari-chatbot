@@ -1,0 +1,12 @@
+# 環境変数ファイル
+.env
+
+# Node.jsモジュール（npm installで再構築できる）
+node_modules/
+
+# ログファイル
+*.log
+
+# ビルド成果物
+dist/
+build/
