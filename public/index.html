@@ -79,6 +79,15 @@
       chatBox.style.display = chatBox.style.display === 'none' ? 'flex' : 'none';
     });
 
+    chatInput.addEventListener('keydown', function (event) {
+      // Windows/Linux: Ctrl + Enter、Mac: Command + Enter
+      const isCtrlEnter = (event.ctrlKey || event.metaKey) && event.key === 'Enter';
+      if (isCtrlEnter) {
+        event.preventDefault();  // 改行防止
+        chatSend.click();        // 「送信」ボタンを押すのと同じ動作
+      }
+    });
+
     chatSend.addEventListener('click', async () => {
       const userInput = chatInput.value.trim();
       if (!userInput) return;
