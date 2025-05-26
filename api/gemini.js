@@ -35,6 +35,7 @@ export default async function handler(req, res) {
     });
 
     const data = await response.json();
+    console.log(data);
     const content = data?.candidates?.[0]?.content?.parts?.[0]?.text || "応答の取得に失敗しました。";
 
     res.status(200).json({ content });
