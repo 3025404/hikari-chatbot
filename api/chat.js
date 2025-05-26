@@ -38,6 +38,10 @@ export default async function handler(req, res) {
   }
 
   const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
+  if (!GEMINI_API_KEY) {
+    return res.status(500).json({ message: 'GEMINI_API_KEY is not set.' });
+  }
+
   const { userInput } = req.body;
 
   const prompt = `次の形式で返答してください：
@@ -48,10 +52,10 @@ export default async function handler(req, res) {
 ユーザーの発言: ${userInput}`;
 
   try {
-    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${AIzaSyAnZpIz3f32l9gS_35vN5fPkm8D6LTNmRo}`, {
+    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${GEMINI_API_KEY}`, {
       method: 'POST',
       headers: {
-        "Content-Type": "application/json"
+        'Content-Type': 'application/json'
       },
       body: JSON.stringify({
         contents: [
