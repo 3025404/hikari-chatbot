@@ -103,7 +103,8 @@
       chatLog.scrollTop = chatLog.scrollHeight;
 
       try {
-        const response = await fetch("/api/chat", {
+        //const response = await fetch("/api/chat", { //Chatgtpt
+        const response = await fetch("/api/gemini", { //gemini
           method: "POST",
           headers: {
             "Content-Type": "application/json"
