@@ -19,7 +19,9 @@ export default async function handler(req, res) {
 ユーザーの発言: ${userInput}`;
 
   try {
-    const response = await fetch(`https://generativelanguage.googleapis.com/v1/models/gemini-pro:generateContent?key=${GEMINI_API_KEY}`, {
+    const response = await fetch(
+      `https://generativelanguage.googleapis.com/v1/models/chat-bison-001:generateContent?key=
+      ${GEMINI_API_KEY}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
