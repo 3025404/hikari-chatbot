@@ -20,7 +20,7 @@ export default async function handler(req, res) {
 
   try {
     const response = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/chat-bison-001:generateContent?key=
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=
       ${GEMINI_API_KEY}`, {
       method: 'POST',
       headers: {
